@@ -1,0 +1,20 @@
+fun main() {
+    println("Day $newDayNum!")
+
+    fun part1(input: List<String>): Int {
+        return 0
+    }
+
+    fun part2(input: List<String>): Int {
+        return 0
+    }
+
+    // Test
+    val testInput = readInput("test_input/day$newDayNum")
+    check(part1(testInput) == 0)
+
+    // Solve
+    val input = readInput("input/day$newDayNum")
+    println("Part 1 Answer: ${part1(input)}")
+    println("Part 2 Answer: ${part2(input)}")
+}
