@@ -32,9 +32,6 @@ kotlin {
 
 task("genNextDay") {
     doLast {
-        // Optional, if not provided will look to that last created file and increment the day.
-        val day: Int = properties["day"].toString().toIntOrNull() ?: 0
-        // Optional, if not provided an empty file will be created.
         val sourceDir = "$projectDir/src"
         val inputDir = "$sourceDir/input"
         val testInputDir = "$sourceDir/test_input"
@@ -42,9 +39,9 @@ task("genNextDay") {
         val prevDayNum = fileTree(sourceDir)
             .matching { include("Day*.kt") }
             .maxOfOrNull {
-                Regex("Day(\\d+)\\.kt").find(it.name)?.destructured
+                "Day(\\d+).kt".toRegex().find(it.name)?.destructured
                     ?.let { (value) -> value.toInt() } ?: 0
-            } ?: 0
+            } ?: 1
         val newDayNum = String.format("%d", prevDayNum.inc())
 
         // Create new Day/kt file.
@@ -63,14 +60,13 @@ fun main() {
 
     // Test
     val testInput = readInput("test_input/day$newDayNum")
-    check(part1(testInput) == 0)
+    check(part1(testInput) == 0) { "Test Part 1 Failed" }
+    check(part2(testInput) == 0) { "Test Part 2 Failed" }
 
     // Solve
     val input = readInput("input/day$newDayNum")
-    print("Part 1 Answer: ")
-    println(part1(input))    
-    print("Part 2 Answer: ")
-    println(part2(input))
+    println("Part 1 Answer: " + part1(input))
+    println("Part 2 Answer: " + part2(input))
 } 
         """.trimIndent()
         )

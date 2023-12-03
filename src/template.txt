@@ -11,10 +11,13 @@ fun main() {
 
     // Test
     val testInput = readInput("test_input/day$newDayNum")
-    check(part1(testInput) == 0)
+    check(part1(testInput) == 0) { "Test Part 1 Failed" }
+    check(part2(testInput) == 0) { "Test Part 2 Failed" }
 
     // Solve
     val input = readInput("input/day$newDayNum")
-    println("Part 1 Answer: ${part1(input)}")
-    println("Part 2 Answer: ${part2(input)}")
+    print("Part 1 Answer: ")
+    println(part1(input))
+    print("Part 2 Answer: ")
+    println(part2(input))
 }
