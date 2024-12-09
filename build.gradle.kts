@@ -33,16 +33,20 @@ kotlin {
 task("genNextDay") {
     doLast {
         val sourceDir = "$projectDir/src"
-        val inputDir = "$sourceDir/input"
-        val testInputDir = "$sourceDir/test_input"
+        val inputDirFile = File("$sourceDir/input").apply {
+            mkdirs()
+        }
+        val testInputDirFile = File("$sourceDir/test_input").apply {
+            mkdirs()
+        }
 
         val prevDayNum = fileTree(sourceDir)
             .matching { include("Day*.kt") }
             .maxOfOrNull {
                 "Day(\\d+).kt".toRegex().find(it.name)?.destructured
                     ?.let { (value) -> value.toInt() } ?: 0
-            } ?: 1
-        val newDayNum = String.format("%d", prevDayNum.inc())
+            }?.inc() ?: 1
+        val newDayNum = String.format("%d", prevDayNum)
 
         // Create new Day/kt file.
         File(sourceDir, "Day$newDayNum.kt").writeText(
@@ -72,7 +76,7 @@ fun main() {
         )
 
         // Create test files.
-        File(testInputDir, "day$newDayNum.txt").createNewFile()
-        File(inputDir, "day$newDayNum.txt").createNewFile()
+        File(testInputDirFile, "day$newDayNum.txt").createNewFile()
+        File(inputDirFile, "day$newDayNum.txt").createNewFile()
     }
 }
