@@ -39,7 +39,7 @@ fun main() {
 
         for (report in unsafeReports) {
             for (i in report.indices) {
-                val newList = report.toMutableList().apply { removeAt(i) }
+                val newList = report.filterIndexed { index, _ -> index != i }
                 if (isSafe(0, 0, newList)) {
                     dampenedReports++
                     break
